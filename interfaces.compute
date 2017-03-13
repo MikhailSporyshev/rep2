@@ -1,0 +1,39 @@
+### Hetzner Online GmbH - installimage
+# Loopback device:
+auto lo
+iface lo inet loopback
+iface lo inet6 loopback
+
+# device: eth0
+auto  eth0
+iface eth0 inet static
+  address   78.46.92.52
+  netmask   255.255.255.224
+  gateway   78.46.92.33
+  # default route to access subnet
+  up route add -net 78.46.92.32 netmask 255.255.255.224 gw 78.46.92.33 eth0
+
+iface eth0 inet6 static
+  address 2a01:4f8:120:6446::2
+  netmask 64
+  gateway fe80::0
+
+#auto tap1
+#iface tap1 inet manual
+#  up ip link set dev $IFACE up
+#  down ip link set dev $IFACE down
+
+#auto br0
+#iface br0 inet manual
+#        bridge_ports tap1
+#        bridge_stp off
+#        bridge_fd 0
+#        bridge_maxwait 0
+#  up ip link set dev $IFACE up
+#  down ip link set dev $IFACE down
+
+# The provider network interface
+auto tap1
+iface tap1 inet manual
+  up ip link set dev $IFACE up
+  down ip link set dev $IFACE down
